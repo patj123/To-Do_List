@@ -2,24 +2,26 @@
 document.addEventListener("DOMContentLoaded", function() {
     const newToDoForm = document.getElementById("newTodoForm");
     const toDoList = document.getElementById('to-do-list')
+    const saveToDos = [];
+    //submit function
     newToDoForm.addEventListener("submit", function (event) {
         let newToDo = document.createElement("li");
         newToDo.innerText = document.getElementById("task").value;
         // console.log(newToDo.innerText);
+        saveToDos.push({task: newToDo.innerText, isCompleted: false});
         toDoList.appendChild(newToDo);
         let removeButton = document.createElement('button');
-        removeButton.innerText = "X"
-        newToDo.appendChild(removeButton)
-        let saveToDos = []
-        ///localStorage.setItem('listName', )
+        removeButton.innerText = "X";
+        newToDo.appendChild(removeButton);
+        
+        localStorage.setItem('todos', JSON.stringify(saveToDos))
     });
     toDoList.addEventListener("click", function(event) {
-        const targetTag = event.target.tagName.toLowerCase()
+        const targetTag = event.target.tagName.toLowerCase();
         if (targetTag === 'li') {
             console.log(event.target.style.textDecoration);
-            if (event.target.style.textDecoration === "none") {
-                
-                event.target.style.textDecoration = "line-through"
+            if (event.target.style.textDecoration === "" || event.target.style.textDecoration === "none") {
+               event.target.style.textDecoration = "line-through"
             } else if (event.target.style.textDecoration === "line-through"){
                 event.target.style.textDecoration = "none";
             }   
