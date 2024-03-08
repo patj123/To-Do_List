@@ -1,53 +1,96 @@
-//const toDoList2 = document.getElementById('to-do-list');
- const saveToDos = JSON.parse(localStorage.getItem("todos")) || [];
-
 document.addEventListener("DOMContentLoaded", function() {
 
-    const newToDoForm = document.getElementById("newTodoForm");
+    const clearTodosButton = document.getElementById('clearTodos');
+
     const toDoList = document.getElementById('to-do-list');
-    //submit function
-    newToDoForm.addEventListener("submit", function (event) {
-        for (let i = 0; i < saveToDos.length; i++) {
-        let newToDo = document.createElement("li");
-        newToDo.innerText = saveToDos[i].task;
-        newToDo.isCompleted = saveToDos[i].isCompleted ? true : false
+    const saveToDos = JSON.parse(localStorage.getItem("todos")) || [];
+    for (let i = 0; i < saveToDos.length; i++) {
+        let newToDo = document.createElement("li"); // creating a 'li' element
+        newToDo.innerText = saveToDos[i].task; // setting the value of 'task'
+        newToDo.isCompleted = saveToDos[i].isCompleted ? true : false; // setting the value of 'isCompleted'
         toDoList.appendChild(newToDo);
     }
+
+    const newToDoForm = document.getElementById("newTodoForm");
+    //submit function
+    newToDoForm.addEventListener("submit", function (event) {
+        //  This method is particularly useful in form handling, link navigation, and other interactive web behaviors 
+        // where the developer wants to define custom functionality without triggering the browser's default behavior.
+        // in this case to prevent a form from submitting to the server so that you can perform validation or AJAX requests instead
+        event.preventDefault();
+
         let newToDo = document.createElement("li");
         newToDo.innerText = document.getElementById("task").value;
         // console.log(newToDo.innerText);
         saveToDos.push({task: newToDo.innerText, isCompleted: false});
+        localStorage.setItem('todos', JSON.stringify(saveToDos));
+
         toDoList.appendChild(newToDo);
-        let removeButton = document.createElement('button');
-        removeButton.innerText = "X";
-        newToDo.appendChild(removeButton);
-        
-        localStorage.setItem('todos', JSON.stringify(saveToDos))
+
+        // the Remove Button to remove speific things from the list
+        //let removeButton = document.createElement('button');
+        //removeButton.innerText = "X";
+        //newToDo.appendChild(removeButton); // Adding to the List(li)
+        //clearing the textbox
+
+        newToDoForm.reset();
     });
     toDoList.addEventListener("click", function(event) {
         const targetTag = event.target.tagName.toLowerCase();
-        let clickedListItem = event.target
+        let clickedListItem = event.target; // This is new code
+        // console.log(event.target)
         if (targetTag === 'li') {
-            console.log(event.target.style.textDecoration);
+            let removeButton = document.createElement('button');        
+            removeButton.innerText = "X";
+            console.log(removeButton)
+            //console.log(event.target.style.textDecoration);
             if (event.target.style.textDecoration === "" || event.target.style.textDecoration === "none") {
-               event.target.style.textDecoration = "line-through"
+               event.target.style.textDecoration = "line-through";
+                clickedListItem.appendChild(removeButton); 
+               // This is to update the localStorage
+               for (let i = 0; i < saveToDos.length; i++) {
+                if (saveToDos[i].task === clickedListItem.innerText) {
+                    saveToDos[i].isCompleted = !saveToDos[i].isCompleted;
+                    localStorage.setItem('todos', JSON.stringify(saveToDos));
+                }
+                // Ends the update of localStorage
+            }
             } else if (event.target.style.textDecoration === "line-through"){
+                //removes line through if you click on it again
                 event.target.style.textDecoration = "none";
-                console.log(localStorage.getItem('todos').parse);
+                //when line is removed, then remove button
+                clickedListItem.removeElement(removeButton); 
+                console.log(clickedListItem.removeElement(removeButton))
+                //console.log(JSON.parse(localStorage.getItem('todos')));
             }   
             
         } else if (targetTag === 'button') {
             event.target.parentElement.remove();
         }
-        for (let i in saveToDos) {
-            if (saveToDos[i].task === event.target.innerText) {
-                saveToDos[i].isCompleted = !saveToDos[i].isCompleted
-                localStorage.setItem('todos', JSON.stringify(saveToDos))
-            }
-        }
-    })
+        
+        /* if (event.target.style.textDecoration === 'line-through') {
+            let removeButton = document.createElement('button');
+            removeButton.innerText = "X";
+        } else {
+            
+        } */
+    });
 
-})
+        // Event listener for the Clear Todos button
+clearTodosButton.addEventListener('click', function() {
+    // Clearing localStorage
+    localStorage.clear();
+
+    while (toDoList.firstChild) {
+        toDoList.removeChild(toDoList.firstChild);
+    }
+
+    // Since localStorage is cleared, the the to-dos array is reset
+    saveToDos.length = 0;
+    });
+});
+
+
 
 // addEventListener 
 // is a method used in JavaScript 
