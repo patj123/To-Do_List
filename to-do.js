@@ -1,9 +1,11 @@
+//JS is origional
+
 document.addEventListener("DOMContentLoaded", function() {
 
     const clearTodosButton = document.getElementById('clearTodos');
 
     const toDoList = document.getElementById('to-do-list');
-    const saveToDos = JSON.parse(localStorage.getItem("todos")) || [];
+    let saveToDos = JSON.parse(localStorage.getItem("todos")) || [];
     for (let i = 0; i < saveToDos.length; i++) {
         let newToDo = document.createElement("li"); // creating a 'li' element
         newToDo.innerText = saveToDos[i].task; // setting the value of 'task'
@@ -45,26 +47,25 @@ document.addEventListener("DOMContentLoaded", function() {
             //console.log(removeButton)
             //console.log(event.target.style.textDecoration);
             if (event.target.style.textDecoration === "" || event.target.style.textDecoration === "none") {
-               event.target.style.textDecoration = "line-through";
-                clickedListItem.appendChild(removeButton); 
-               // This is to update the localStorage
-               for (let i = 0; i < saveToDos.length; i++) {
-                if (saveToDos[i].task === clickedListItem.innerText) {
-                    saveToDos[i].isCompleted = !saveToDos[i].isCompleted;
+                event.target.style.textDecoration = "line-through";
+                 clickedListItem.appendChild(removeButton); 
+                // This is to update the localStorage
+                for (let i = 0; i < saveToDos.length; i++) {
+                    tempClickedListItem = (clickedListItem.innerText).slice(0, -1);  // to remove the 'X' from the end
+                    saveToDos = saveToDos.filter(todo => todo.task !== tempClickedListItem);
                     localStorage.setItem('todos', JSON.stringify(saveToDos));
-                }
-                // Ends the update of localStorage
-            }
-            } else if (event.target.style.textDecoration === "line-through"){
-                //removes line through if you click on it again
-                event.target.style.textDecoration = "none";
-                //when line is removed, then remove button
-                console.log(clickedListItem.parentNode);
+                    // Ends the update of localStorage
+                 }
+        } else if (event.target.style.textDecoration === "line-through"){
+            //removes line through if you click on it again
+            event.target.style.textDecoration = "none";
+            //when line is removed, then remove button
+            console.log(clickedListItem.parentNode);
 
-                clickedListItem.parentNode.remove(); 
-                // console.log(clickedListItem.removeElement(removeButton));
-                //console.log(JSON.parse(localStorage.getItem('todos')));
-            }   
+            clickedListItem.parentNode.remove(); 
+            // console.log(clickedListItem.removeElement(removeButton));
+            //console.log(JSON.parse(localStorage.getItem('todos')));
+        } 
             
         } else if (targetTag === 'button') {
             event.target.parentElement.remove();
