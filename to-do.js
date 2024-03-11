@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function() {
         if (targetTag === 'li') {
             let removeButton = document.createElement('button');        
             removeButton.innerText = "X";
-            console.log(removeButton)
+            //console.log(removeButton)
             //console.log(event.target.style.textDecoration);
             if (event.target.style.textDecoration === "" || event.target.style.textDecoration === "none") {
                event.target.style.textDecoration = "line-through";
@@ -59,13 +59,20 @@ document.addEventListener("DOMContentLoaded", function() {
                 //removes line through if you click on it again
                 event.target.style.textDecoration = "none";
                 //when line is removed, then remove button
-                clickedListItem.removeElement(removeButton); 
-                console.log(clickedListItem.removeElement(removeButton))
+                console.log(clickedListItem.parentNode);
+
+                clickedListItem.parentNode.remove(); 
+                // console.log(clickedListItem.removeElement(removeButton));
                 //console.log(JSON.parse(localStorage.getItem('todos')));
             }   
             
         } else if (targetTag === 'button') {
             event.target.parentElement.remove();
+            for (let i = 0; i < saveToDos.length; i++) {
+                if (saveToDos[i].task === clickedListItem.innerText) {
+                    saveToDos.splice(i, 1);
+                }
+            }
         }
         
         /* if (event.target.style.textDecoration === 'line-through') {
