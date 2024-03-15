@@ -1,11 +1,21 @@
 //JS is origional
 
+// game plan
+
+// make a function to
+
+
+function updateLocalStorage(toDoArray) {
+    toDoArray.push({ task: newToDo.innerText, isCompleted: false });
+    localStorage.setItem('todos', JSON.stringify(toDoArray));
+}
+
 document.addEventListener("DOMContentLoaded", function() {
 
     const clearTodosButton = document.getElementById('clearTodos');
-
     const toDoList = document.getElementById('to-do-list');
     let saveToDos = JSON.parse(localStorage.getItem("todos")) || [];
+
     for (let i = 0; i < saveToDos.length; i++) {
         let newToDo = document.createElement("li"); // creating a 'li' element
         newToDo.innerText = saveToDos[i].task; // setting the value of 'task'
@@ -14,6 +24,9 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     const newToDoForm = document.getElementById("newTodoForm");
+
+    
+
     //submit function
     newToDoForm.addEventListener("submit", function (event) {
         //  This method is particularly useful in form handling, link navigation, and other interactive web behaviors 
@@ -24,8 +37,8 @@ document.addEventListener("DOMContentLoaded", function() {
         let newToDo = document.createElement("li");
         newToDo.innerText = document.getElementById("task").value;
         // console.log(newToDo.innerText);
-        saveToDos.push({task: newToDo.innerText, isCompleted: false});
-        localStorage.setItem('todos', JSON.stringify(saveToDos));
+                
+        updateLocalStorage(saveToDos);
 
         toDoList.appendChild(newToDo);
 
