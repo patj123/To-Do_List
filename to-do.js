@@ -63,6 +63,8 @@ document.addEventListener("DOMContentLoaded", function() {
             console.log(clickedListItem.parentNode);
 
             clickedListItem.parentNode.remove(); 
+
+
             // console.log(clickedListItem.removeElement(removeButton));
             //console.log(JSON.parse(localStorage.getItem('todos')));
         } 
