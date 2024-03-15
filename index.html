@@ -2,30 +2,21 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="reset.css" />
-    <link rel="stylesheet" type="text/css" href="style.css" />
-    <title>To-Do List</title>
+    <title>Document</title>
 </head>
-
 <body>
-    <form action="#" id="newTodoForm">
-        <label for="task">Task:</label>
-        <input type="text" name = "task" id="task" autofocus>
-        <input type="submit" value="Add To Do">
-        
-    </form>
-    
-    <h1>My To-Dos</h1>
-    <ul id="to-do-list">
-
+    <h1>Your Todos</h1>
+    <ul id="todoList">
     </ul>
-    <!-- Button to clear the session -->
-     <button id="clearTodos">Clear Todos</button>
+    <form action="#" id="newTodoForm">
+        <label for="task">Task: </label>
+        <input type="text" name="task" id="task" autofocus>
+        <input type="submit" value="Add Todo">
+    </form>
+    <!-- Clear Cache Button -->
+    <button id="clearCache">Clear Cache</button>
     <script src="to-do.js"></script>
 </body>
-
 </html>
