@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function() {
         todoList.appendChild(newTodo);
     }
 
-    // Function to handle form submission
+    // Function to handle click events on todo items and remove buttons
     todoForm.addEventListener("submit", function (event) {
         event.preventDefault();
         let todoText = document.getElementById("task").value.trim();
@@ -52,8 +52,10 @@ document.addEventListener("DOMContentLoaded", function() {
     todoList.addEventListener("click", function (event) {
         if (event.target.tagName.toLowerCase() === "li" || event.target.tagName.toLowerCase() === "span") {
             let listItem = event.target.tagName.toLowerCase() === "li" ? event.target : event.target.parentNode;
-            listItem.children[0].style.textDecoration = listItem.children[0].style.textDecoration === "line-through" ? "none" : "line-through";
-            listItem.children[1].style.display = listItem.children[1].style.display === "none" ? "inline" : "none";
+            let todoText = listItem.children[0];
+            todoText.style.textDecoration = todoText.style.textDecoration === "line-through" ? "none" : "line-through";
+            let removeButton = listItem.children[1];
+            removeButton.style.display = todoText.style.textDecoration === "line-through" ? "inline" : "none";
             updateLocalStorage(); // Update localStorage after a todo item is clicked
         } else if (event.target.tagName.toLowerCase() === "button") {
             event.target.parentNode.remove();
