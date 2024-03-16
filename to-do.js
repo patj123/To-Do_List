@@ -2,7 +2,7 @@
 
 document.addEventListener("DOMContentLoaded", function () {
     let todoForm = document.getElementById("newTodoForm");
-    let todoList = document.getElementById("todoList"); // Corrected ID name
+    let todoList = document.getElementById("todoList");
     let clearCacheButton = document.getElementById("clearCache");
 
     // Function to update localStorage with current to-do list
