@@ -36,29 +36,25 @@ document.addEventListener("DOMContentLoaded", function() {
 
         todoList.appendChild(newTodo);
     }
-function updateLocalStorage(saveToDos) {
-            saveToDos.push({ task: newToDo.innerText, isCompleted: false });
-            localStorage.setItem('todos', JSON.stringify(saveToDos));
-        }
-    loadTodos();
 
-    todoForm.addEventListener("submit", function(event) {
+    // Function to handle form submission
+    todoForm.addEventListener("submit", function (event) {
         event.preventDefault();
-        let todoText = document.getElementById("task").value;
-        
-        if (todoText.trim() !== "") {
+        let todoText = document.getElementById("task").value.trim();
+        if (todoText !== "") {
             addTodoItem(todoText);
-            updateLocalStorage();
+            updateLocalStorage(); // Update localStorage after adding a new item
+            todoForm.reset();
         }
-        
-        todoForm.reset();
     });
 
-    todoList.addEventListener("click", function(event) {
+    // Function to handle click events on todo items and remove buttons
+    todoList.addEventListener("click", function (event) {
         if (event.target.tagName.toLowerCase() === "li" || event.target.tagName.toLowerCase() === "span") {
             let listItem = event.target.tagName.toLowerCase() === "li" ? event.target : event.target.parentNode;
             listItem.children[0].style.textDecoration = listItem.children[0].style.textDecoration === "line-through" ? "none" : "line-through";
             listItem.children[1].style.display = listItem.children[1].style.display === "none" ? "inline" : "none";
+            updateLocalStorage(); // Update localStorage after a todo item is clicked
         } else if (event.target.tagName.toLowerCase() === "button") {
             event.target.parentNode.remove();
             updateLocalStorage(); // Update localStorage after an item is removed
