@@ -5,9 +5,7 @@
 // make a function to
 document.addEventListener("DOMContentLoaded", function() {
     let todoForm = document.getElementById("newTodoForm"); // This is getting hold on form
-   function updateLocalStorage() {
-
-
+    function updateLocalStorage() {
         let todos = [];
         todoList.querySelectorAll('span').forEach(todo => {
             todos.push(todo.innerText);
@@ -24,10 +22,10 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
+    // Function to add a new todo item
     function addTodoItem(todoText) {
         let removeButton = document.createElement("button");
         removeButton.innerText = "X";
-        removeButton.style.display = "none";
 
         let newTodoText = document.createElement("span");
         newTodoText.innerText = todoText;
@@ -72,6 +70,7 @@ function updateLocalStorage(saveToDos) {
         localStorage.clear(); // Clear localStorage
         todoList.innerHTML = ''; // Clear all todo list items from the DOM
     });
+    loadTodos()
 });
 
 
