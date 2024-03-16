@@ -1,43 +1,67 @@
 //JS is origional
 
-// game plan
+document.addEventListener("DOMContentLoaded", function () {
+    let todoForm = document.getElementById("newTodoForm");
+    let todoList = document.getElementById("todoList"); // Corrected ID name
+    let clearCacheButton = document.getElementById("clearCache");
 
-// make a function to
-document.addEventListener("DOMContentLoaded", function() {
-    let todoForm = document.getElementById("newTodoForm"); // This is getting hold on form
+    // Function to update localStorage with current to-do list
     function updateLocalStorage() {
         let todos = [];
-        todoList.querySelectorAll('span').forEach(todo => {
-            todos.push(todo.innerText);
+        todoList.querySelectorAll('li').forEach(todoItem => {
+            let todoText = todoItem.querySelector('span').innerText;
+            let completed = todoItem.querySelector('span').style.textDecoration === "line-through";
+            let files = [];
+            todoItem.querySelectorAll('.file-link').forEach(fileLink => {
+                files.push(fileLink.href);
+            });
+            todos.push({ text: todoText, completed: completed, files: files });
         });
         localStorage.setItem('todos', JSON.stringify(todos));
     }
 
+    // Function to load todos from localStorage
     function loadTodos() {
         let storedTodos = JSON.parse(localStorage.getItem('todos'));
         if (storedTodos) {
-            storedTodos.forEach(todoText => {
-                addTodoItem(todoText);
+            storedTodos.forEach(todo => {
+                addTodoItem(todo.text, todo.completed, todo.files);
             });
         }
     }
 
     // Function to add a new todo item
-    function addTodoItem(todoText) {
+    function addTodoItem(todoText, completed, files) {
         let newTodoText = document.createElement("span");
         newTodoText.innerText = todoText;
+        if (completed) {
+            newTodoText.style.textDecoration = "line-through";
+        }
 
         let newTodo = document.createElement("li");
         newTodo.appendChild(newTodoText);
 
+        // Attach files to the todo item
+        if (files && files.length > 0) {
+            files.forEach(file => {
+                let fileLink = document.createElement("a");
+                fileLink.classList.add('file-link');
+                fileLink.href = file;
+                fileLink.textContent = file.split('/').pop(); // Display file name instead of full path
+                newTodo.appendChild(document.createElement("br")); // Add line break for better separation
+                newTodo.appendChild(fileLink);
+            });
+        }
+
         // Create remove button but don't append it yet
         let removeButton = document.createElement("button");
         removeButton.innerText = "X";
-        removeButton.style.display = "none"; // Initially hide the remove button
+        removeButton.style.display = completed ? "inline" : "none"; // Show remove button if completed
 
         // Function to toggle remove button visibility based on todo text decoration
         function toggleRemoveButtonVisibility() {
             removeButton.style.display = newTodoText.style.textDecoration === "line-through" ? "inline" : "none";
+            updateLocalStorage(); // Update localStorage after todo text decoration changes
         }
 
         // Toggle remove button visibility when todo text decoration changes
@@ -57,29 +81,14 @@ document.addEventListener("DOMContentLoaded", function() {
         todoList.appendChild(newTodo);
     }
 
-    // Function to handle click events on todo items and remove buttons
+    // Function to handle form submission
     todoForm.addEventListener("submit", function (event) {
         event.preventDefault();
         let todoText = document.getElementById("task").value.trim();
         if (todoText !== "") {
-            addTodoItem(todoText);
-            updateLocalStorage(); // Update localStorage after adding a new item
-            todoForm.reset();
-        }
-    });
-
-    // Function to handle click events on todo items and remove buttons
-    todoList.addEventListener("click", function (event) {
-        if (event.target.tagName.toLowerCase() === "li" || event.target.tagName.toLowerCase() === "span") {
-            let listItem = event.target.tagName.toLowerCase() === "li" ? event.target : event.target.parentNode;
-            let todoText = listItem.children[0];
-            todoText.style.textDecoration = todoText.style.textDecoration === "line-through" ? "none" : "line-through";
-            let removeButton = listItem.children[1];
-            removeButton.style.display = todoText.style.textDecoration === "line-through" ? "inline" : "none";
-            updateLocalStorage(); // Update localStorage after a todo item is clicked
-        } else if (event.target.tagName.toLowerCase() === "button") {
-            event.target.parentNode.remove();
-            updateLocalStorage(); // Update localStorage after an item is removed
+            addTodoItem(todoText, false, null); // Add new todo item with completed flag set to false and no attached files
+            updateLocalStorage(); // Update localStorage after adding a new todo item
+            todoForm.reset(); // Reset the form
         }
     });
 
@@ -88,8 +97,12 @@ document.addEventListener("DOMContentLoaded", function() {
         localStorage.clear(); // Clear localStorage
         todoList.innerHTML = ''; // Clear all todo list items from the DOM
     });
-    loadTodos()
+
+    // Load todos from localStorage when the page loads
+    loadTodos();
 });
+
+
 
 
 // addEventListener 
