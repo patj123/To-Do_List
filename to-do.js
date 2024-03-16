@@ -65,7 +65,15 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         // Toggle remove button visibility when todo text decoration changes
-        newTodoText.addEventListener("click", toggleRemoveButtonVisibility);
+        newTodoText.addEventListener("click", function() {
+
+            if (newTodoText.style.textDecoration === "line-through") {
+                newTodoText.style.textDecoration = "none";
+            } else {
+                newTodoText.style.textDecoration = "line-through";
+            }
+            toggleRemoveButtonVisibility()
+        });
 
         // Add event listener for remove button to remove the todo item
         removeButton.addEventListener("click", function (event) {
