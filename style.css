@@ -1,81 +1,84 @@
-/* CSS Credit: https: //codepen.io/THEORLAN2/pen/wGJWwv */
-
+/* Base styles */
 body {
-    background: #04A1BF;
-    text-align: center;
-    font-family: 'Open Sans', sans-serif;
+    font-family: "Arial", sans-serif;
+    background-color: #f8f8f8;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    /* Center horizontally */
+    align-items: center;
+    /* Center vertically */
+    height: 100vh;
+    /* Full viewport height */
+}
+
+.container {
+    max-width: 600px;
+    /* Adjust max-width for different device sizes */
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    /* Add shadow for depth */
 }
 
 h1 {
-    color: #ffffff;
-    text-transform: uppercase;
-    font-weight: 800;
-}
-
-p {
-    font-weight: 600;
-}
-
-#submit {
-    border: none;
-    padding: 5px 15px;
-    border-radius: 5px;
-    color: #04A1BF;
-    background-color: #025F70;
-    transition: all 0.75s ease;
-    -webkit-transition: all 0.75s ease;
-    -moz-transition: all 0.75s ease;
-    -ms-transition: all 0.75s ease;
-    -o-transition: all 0.75 ease;
-    font-weight: normal;
-}
-
-#enter:hover {
-    background-color: #02798F;
-    color: #FFCD5D;
+    font-size: 24px;
+    text-align: center;
 }
 
 ul {
-    text-align: left;
-    margin-top: 20px;
+    list-style-type: none;
+    padding: 0;
 }
-
 
 li {
-    list-style: none;
-    padding: 10px 20px;
-    color: #ffffff;
-    text-transform: capitalize;
-    font-weight: 600;
-    border: 2px solid #025f70;
+    background-color: #fff;
     border-radius: 5px;
+    padding: 10px;
     margin-bottom: 10px;
-    background: #4EB9CD;
-    transition: all 0.75s ease;
-    -webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -ms-transition: all 0.5s ease;
-    -o-transition: all 0.5 ease;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-li:hover {
-    background: #76CFE0;
+span {
+    flex: 1;
+    text-decoration: none;
+    cursor: pointer;
 }
 
-li>button {
-    font-weight: normal;
-    background: none;
+button {
+    background-color: #ff4d4d;
+    color: #fff;
     border: none;
-    float: right;
-    color: #025f70;
-    font-weight: 800;
+    border-radius: 50%;
+    padding: 5px 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-input {
+button:hover {
+    background-color: #ff3333;
+}
+
+input[type="text"] {
+    width: calc(100% - 20px);
+    /* Adjust width to accommodate padding */
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
     border-radius: 5px;
-    min-width: 65%;
-    padding: 5px;
-    border: none;
+}
+
+/* Responsive styles */
+@media only screen and (min-width: 600px) {
+
+    /* Tablets, desktops, and laptops */
+    .container {
+        padding: 40px;
+    }
 }
 
 

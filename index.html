@@ -4,19 +4,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Your Todos</h1>
-    <ul id="todoList">
-    </ul>
-    <form action="#" id="newTodoForm">
-        <label for="task">Task: </label>
-        <input type="text" name="task" id="task" autofocus>
-        <input type="submit" value="Add Todo">
-    </form>
-    <!-- Clear Cache Button -->
-    <button id="clearCache">Clear Cache</button>
+    <div class="container">
+        <h1>Your Todos</h1>
+        <ul id="todoList">
+        </ul>
+        <form action="#" id="newTodoForm">
+            <input type="text" name="task" id="task" placeholder="Add a new task" required>
+            <input type="submit" value="Add Todo">
+        </form>
+        <button id="clearCache">Clear Cache</button>
+    </div>
     <script src="to-do.js"></script>
 </body>
 </html>
