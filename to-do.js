@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     // Event listener for the 'Clear Cache' button
-    clearCacheButton.addEventListener("click", function() {
+    clearCacheButton.addEventListener("click", function () {
         localStorage.clear(); // Clear localStorage
         todoList.innerHTML = ''; // Clear all todo list items from the DOM
     });
