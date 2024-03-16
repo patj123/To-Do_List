@@ -24,16 +24,36 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Function to add a new todo item
     function addTodoItem(todoText) {
-        let removeButton = document.createElement("button");
-        removeButton.innerText = "X";
-
         let newTodoText = document.createElement("span");
         newTodoText.innerText = todoText;
 
         let newTodo = document.createElement("li");
         newTodo.appendChild(newTodoText);
+
+        // Create remove button but don't append it yet
+        let removeButton = document.createElement("button");
+        removeButton.innerText = "X";
+        removeButton.style.display = "none"; // Initially hide the remove button
+
+        // Function to toggle remove button visibility based on todo text decoration
+        function toggleRemoveButtonVisibility() {
+            removeButton.style.display = newTodoText.style.textDecoration === "line-through" ? "inline" : "none";
+        }
+
+        // Toggle remove button visibility when todo text decoration changes
+        newTodoText.addEventListener("click", toggleRemoveButtonVisibility);
+
+        // Add event listener for remove button to remove the todo item
+        removeButton.addEventListener("click", function (event) {
+            event.stopPropagation(); // Prevent the click event from bubbling up to the todo item
+            newTodo.remove(); // Remove the todo item from the list
+            updateLocalStorage(); // Update localStorage after an item is removed
+        });
+
+        // Append todo text and remove button to the todo item
         newTodo.appendChild(removeButton);
 
+        // Append the new todo item to the todo list
         todoList.appendChild(newTodo);
     }
 
